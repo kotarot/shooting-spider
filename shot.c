@@ -1,6 +1,6 @@
 ﻿// shot.c
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include <math.h>
 #include "shot.h"
 
