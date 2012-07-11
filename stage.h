@@ -18,7 +18,6 @@
     CLIFF,
     BLOCK
 } e_mapfield;*/
-
 // information of path
 //extern e_mapfield map[ROW + 2][COLUMN + 2];
 

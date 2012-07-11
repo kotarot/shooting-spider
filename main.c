@@ -2,7 +2,7 @@
 //メインファイル
 
 #include <stdio.h>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "character.h"
 #include "color.h"
 #include "global.h"

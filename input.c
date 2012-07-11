@@ -1,7 +1,7 @@
 ﻿// input.c
 // キーボード入力
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "input.h"
 #include <stdlib.h>
 
