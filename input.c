@@ -1,9 +1,9 @@
 ﻿// input.c
 // キーボード入力
 
+#include <stdlib.h>
 #include <GL/glut.h>
 #include "input.h"
-#include <stdlib.h>
 
 // キーボード（文字キー）
 void keyboard(unsigned char key, int x, int y)

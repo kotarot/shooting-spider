@@ -12,6 +12,9 @@
 #include "util.h"
 
 #define FPS 10
+#define WINDOW_WIDTH  800
+#define WINDOW_HEIGHT 600
+
 
 double aspect;
 //e_vmode visual_mode;
@@ -121,7 +124,7 @@ void timer(int value)
 
 int main(int argc, char *argv[])
 {
-    int width = 800, height = 800;
+    int width = WINDOW_WIDTH, height = WINDOW_HEIGHT;
     aspect = (double)width / height;
 
     glutInit(&argc, argv);
