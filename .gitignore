@@ -1,8 +1,8 @@
 # オブジェクトファイル
-.obj
-.o
+*.obj
+*.o
 
 # 実行ファイル
-.bat
-.exe
-.out
+*.bat
+*.exe
+*.out
