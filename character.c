@@ -1,6 +1,6 @@
 ﻿// character.c
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 //#include "global.h"
 #include "character.h"
 

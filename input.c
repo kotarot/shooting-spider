@@ -2,7 +2,7 @@
 // キーボード入力
 
 #include <stdlib.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "input.h"
 
 // キーボード（文字キー）
