@@ -1,8 +1,16 @@
 ﻿// character.c
+/*
+キャラクターの生成
+最初に10匹
+やっつけた後に1匹
+端までいったら左から出現
+
+*/
 
 #include <GLUT/glut.h>
 //#include "global.h"
 #include "character.h"
+#include "stage.h"
 
 //unsigned int goaltimer;
 //e_gamestate gamestate;
@@ -215,11 +223,16 @@ void new_character(void)
 {
     int p = p_character++ % NUM_OF_CHARS;  // キャラクターリストの添字
 
-    character[p].x     = get_rand(1, 11) + 0.0;
-    character[p].y     = get_rand(20, 25) + 0.0;
-    character[p].z     = get_rand(0, 2) + 0.0;
+    character[p].x     = get_rand(-10, 10) + 0.0;
+    character[p].y     = get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+    character[p].z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
     character[p].r     = 1.0;
-    character[p].speed = 0.1;
+	if (p_character % 2 == 0) {
+    	character[p].speed = 0.1;
+	} else {
+    	character[p].speed = -0.1;
+	}
+
     character[p].score = 10;
     character[p].color = GRAY;
     character[p].alive = 1;
@@ -250,9 +263,22 @@ void update_character(void)
         if (character[i].alive) {
             character[i].x += character[i].speed;
         }
+		if (character[i].x > WIDTH_STAGE / 2 || character[i].x < -WIDTH_STAGE / 2) {
+			renew_character(&character[i]);
+		}
     }
 
     // 衝突判定によってaliveを0か1に変えるのをここにかかなきゃならんがまだ書いてない
+}
+void renew_character(s_character *character){
+    character->x     =get_rand(-10, 10) + 0.0;
+    character->y     =get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+    character->z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
+    character->r     = 1.0;
+    character->speed = 0.1;
+    character->score = 10;
+    character->color = GRAY;
+    character->alive = 1;
 }
 
 // draw_characterを改変して使ってみる

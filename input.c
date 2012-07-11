@@ -18,6 +18,12 @@ void keyboard(unsigned char key, int x, int y)
         //    init();
         //    break;
         // quit
+		case 'l':
+			eye_y += 0.5;
+			break;
+		case 'L':
+			eye_y -= 0.5;
+			break;
         case 'q':
             exit(0);
     }
@@ -29,15 +35,19 @@ void s_keyboard(int key, int x, int y)
 {
     switch(key) {
         case GLUT_KEY_UP: // 上
+			eye_z += 0.5;
             // ここで目標を上に動かす関数を呼ぶ
             break;
         case GLUT_KEY_DOWN: // 下
+			eye_z -= 0.5;
             // ここで目標を下に動かす関数を呼ぶ
             break;
         case GLUT_KEY_RIGHT: // 右
+			eye_x += 0.5;
             // ここで目標を右に動かす関数を呼ぶ
             break;
         case GLUT_KEY_LEFT: // 左
+			eye_x -= 0.5;
             // ここで目標を左に動かす関数を呼ぶ
             break;
     }
