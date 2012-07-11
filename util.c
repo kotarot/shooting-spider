@@ -1,7 +1,6 @@
 ﻿// util.c
 // いろいろ関数
 
-
 #include <stdlib.h>
 #include <time.h>
 #include <GL/glut.h>

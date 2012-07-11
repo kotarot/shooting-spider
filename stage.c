@@ -2,6 +2,7 @@
 
 #include <GL/glut.h>
 #include "stage.h"
+#include "util.h"
 
 void init_stage(void)
 {
@@ -20,12 +21,31 @@ void init_stage(void)
 
 void disp_stage(void)
 {
-    int i, j, k;
+    int i;
+    GLfloat color_stage[4] = {0.6, 0.0, 0.0, 1.0};
+
+    glPushMatrix();
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, color_stage);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, color_stage);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, color_stage);
+    glMaterialf(GL_FRONT, GL_SHININESS, 80.0);
+
+    for (i = 0; i < 3; i++) {
+        draw_rectangle(
+            WIDTH_STAGE, DEPTH_STAGE, THICK,
+            0.0, DISTANCE_STAGE + DEPTH_STAGE * 0.5, i * HEIGHT_STAGE - THICK * 0.5
+        );
+    }
+
+    glPopMatrix();
+
+    /*int i, j, k;
 
     glDisable(GL_LIGHTING);
     glPushMatrix();
 
-    /*// draw one grid
+    // draw one grid
     for (i = 1; i <= ROW; i++) { // row
         for (j = 1; j <= COLUMN; j++) { // column
             if ((i + j) % 2 == 1) { // when (i + j) is odd
@@ -44,7 +64,7 @@ void disp_stage(void)
     }*/
 
     // stage作成
-    for (k = 0; k < 3; k++) {
+    /*for (k = 0; k < 3; k++) {
 		glColor3d(0.5, 0.5, 0.5); // red
 
          glBegin(GL_POLYGON);
@@ -125,6 +145,6 @@ void disp_stage(void)
     }
 		*/
 
-    glPopMatrix();
-    glEnable(GL_LIGHTING);
+    /*glPopMatrix();
+    glEnable(GL_LIGHTING);*/
 }
