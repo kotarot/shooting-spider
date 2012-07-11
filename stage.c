@@ -45,6 +45,44 @@ void disp_stage(void)
 
     // stage作成
     for (k = 0; k < 3; k++) {
+		glColor3d(0.5, 0.5, 0.5); // red
+
+         glBegin(GL_POLYGON);
+         //上面
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE);
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE);
+         //下面
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE - THICK);
+         //正面
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE );
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE);
+         //後面
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE );
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE);
+         //左面
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE );
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE);
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(-WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE - THICK);
+         //右面
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE );
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE + DEPTH_STAGE, k * HIGHT_STAGE - THICK);
+         glVertex3d(WINDTH_STAGE / 2, DISTANCE_STAGE, k * HIGHT_STAGE - THICK);
+
+         glEnd();
+        }
+
+		/*
         for (i = ROW; i <= ROW_STAGE; i++) { // row
             for (j = 1; j <= COLUMN; j++) { // column
                 glColor3d(0.5, 0.5, 0.5); // red
@@ -85,6 +123,7 @@ void disp_stage(void)
             }
         }
     }
+		*/
 
     glPopMatrix();
     glEnable(GL_LIGHTING);
