@@ -30,7 +30,7 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    gluLookAt(5.5, -10.0, 5.0, 5.5, 20.0, 0.0, 0.0, 0.0, 1.0);
+    gluLookAt(0.0, -10.0, 5.0, 0.0, 20.0, 0.0, 0.0, 0.0, 1.0);
 
     /*
     switch (visual_mode) {
@@ -67,6 +67,7 @@ void display(void)
 
 void init(void)
 {
+	int i;
     glClearColor(1.0, 1.0, 1.0, 1.0);  // set background color
 
     glEnable(GL_LIGHTING);
@@ -77,7 +78,9 @@ void init(void)
     game_time = 0;
     init_rand();
     init_character();
-    new_character();
+	for (i=0;i<5;i++) {
+    	new_character();
+	}
     init_shot();
     init_stage();
     //visual_mode = FOLLOW;
@@ -118,7 +121,7 @@ void timer(int value)
 
 int main(int argc, char *argv[])
 {
-    int width = 500, height = 500;
+    int width = 800, height = 800;
     aspect = (double)width / height;
 
     glutInit(&argc, argv);

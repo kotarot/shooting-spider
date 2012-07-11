@@ -3,7 +3,7 @@
 
 #include <GL/glut.h>
 #include "input.h"
-#include <stdlib.h> 
+#include <stdlib.h>
 
 // キーボード（文字キー）
 void keyboard(unsigned char key, int x, int y)
