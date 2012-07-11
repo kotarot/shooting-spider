@@ -1,6 +1,6 @@
 // letter.c
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "letter.h"
 
 

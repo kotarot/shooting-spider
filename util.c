@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "util.h"
 
 void init_rand(void)

@@ -7,7 +7,7 @@
 
 */
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 //#include "global.h"
 #include "character.h"
 #include "stage.h"
@@ -224,7 +224,8 @@ void new_character(void)
     int p = p_character++ % NUM_OF_CHARS;  // キャラクターリストの添字
 
     character[p].x     = get_rand(-10, 10) + 0.0;
-    character[p].y     = get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+//    character[p].y     = get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+    character[p].y     =  DISTANCE_STAGE + DEPTH_STAGE / 2.0;
     character[p].z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
     character[p].r     = 1.0;
 	if (p_character % 2 == 0) {
@@ -232,7 +233,6 @@ void new_character(void)
 	} else {
     	character[p].speed = -0.1;
 	}
-
     character[p].score = 10;
     character[p].color = GRAY;
     character[p].alive = 1;
@@ -272,10 +272,11 @@ void update_character(void)
 }
 void renew_character(s_character *character){
     character->x     =get_rand(-10, 10) + 0.0;
-    character->y     =get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+    //character->y     =get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+    character->y     = DISTANCE_STAGE + DEPTH_STAGE / 2.0;
     character->z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
     character->r     = 1.0;
-    character->speed = 0.1;
+ //   character->speed = 0.1;
     character->score = 10;
     character->color = GRAY;
     character->alive = 1;
@@ -312,22 +313,30 @@ void draw_one_character(s_character *character)
     glMaterialfv(GL_FRONT, GL_SPECULAR, color_body);
     glMaterialf(GL_FRONT, GL_SHININESS, 80.0);
 
+	glTranslatef(pos_x, pos_y, pos_z);
+	if (character->speed < 0) {
+		glRotatef(90.0f, 0.0f, 0.0f, 1.0f); 
+	} else {
+		glRotatef(-90.0f, 0.0f, 0.0f, 1.0f); 
+	}
+
+
     // body
-    draw_rectangle(0.5, 0.8, 0.3, pos_x + 0.0, pos_y - 0.1, pos_z);
+    draw_rectangle(0.5, 0.8, 0.3, 0.0, - 0.1, 0.0 );
     // head
-    draw_rectangle(0.3, 0.3, 0.3, pos_x + 0.0, pos_y + 0.3, 0.2 + pos_z);
+    draw_rectangle(0.3, 0.3, 0.3, 0.0, 0.3, 0.2 );
 
     for (i = 0; i < 3; i++) {
         // right
             // baseleg
-            draw_rectangle(0.4, 0.07, 0.07, pos_x - 0.2, pos_y + pos_base[i] - 0.1, pos_z);
+            draw_rectangle(0.4, 0.07, 0.07, -0.2, pos_base[i] - 0.1, 0.0  );
             // endleg
-            draw_rectangle(0.07, 0.07, 0.3, pos_x - 0.4, pos_y + pos_base[i] - 0.1, -0.15 + pos_z);
+            draw_rectangle(0.07, 0.07, 0.3, -0.4, pos_base[i] - 0.1, -0.15 );
         // left
             // baseleg
-            draw_rectangle(0.4, 0.07, 0.07, pos_x + 0.2, pos_y + pos_base[i] - 0.1, pos_z);
+            draw_rectangle(0.4, 0.07, 0.07, 0.2, pos_base[i] - 0.1, 0.0 );
             // endleg
-            draw_rectangle(0.07, 0.07, 0.3, pos_x + 0.4, pos_y + pos_base[i] - 0.1, -0.15 + pos_z);
+            draw_rectangle(0.07, 0.07, 0.3, 0.4, pos_base[i] - 0.1, -0.15 );
     }
 
     glMaterialfv(GL_FRONT, GL_AMBIENT, color_eye);
@@ -336,8 +345,8 @@ void draw_one_character(s_character *character)
     glMaterialf(GL_FRONT, GL_SHININESS, 80.0);
 
     // eyes
-    draw_rectangle(0.05, 0.05, 0.05, pos_x + 0.07, pos_y + 0.45, 0.25 + pos_z);
-    draw_rectangle(0.05, 0.05, 0.05, pos_x - 0.07, pos_y + 0.45, 0.25 + pos_z);
+    draw_rectangle(0.05, 0.05, 0.05, 0.07, 0.45, 0.25 );
+    draw_rectangle(0.05, 0.05, 0.05, - 0.07, 0.45, 0.25 );
 
     // finish drawing an object
     glPopMatrix();

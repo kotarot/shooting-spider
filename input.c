@@ -2,7 +2,7 @@
 // キーボード入力
 
 #include <stdlib.h>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "input.h"
 
 // キーボード（文字キー）
@@ -19,6 +19,7 @@ void keyboard(unsigned char key, int x, int y)
         //    break;
         // quit
 		case 'l':
+		//15がよかった
 			eye_y += 0.5;
 			break;
 		case 'L':
