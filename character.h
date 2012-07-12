@@ -43,6 +43,7 @@ void change_color(s_character *character);
 void init_character(void);
 void new_character(void);
 void update_character(void);
+void renew_character(s_character *character);
 void disp_character(void);
 void draw_one_character(s_character *character);
 

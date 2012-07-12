@@ -11,7 +11,7 @@
 #include "stage.h"
 #include "util.h"
 
-#define FPS 15
+#define FPS 10
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
@@ -33,7 +33,7 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 25.0, 0.0, 0.0, 0.0, 1.0);
+    gluLookAt(0.0 + eye_x, 7.5 + eye_y, 6.0 + eye_z , 0.0, 40.0, 2.5, 0.0, 0.0, 1.0);
 
     /*
     switch (visual_mode) {
@@ -71,6 +71,9 @@ void display(void)
 void init(void)
 {
 	int i;
+	eye_x=0.0;//作業用に視点を動かせるように
+	eye_y=0.0;//作業用に視点を動かせるように
+	eye_z=0.0;//作業用に視点を動かせるように
     glClearColor(1.0, 1.0, 1.0, 1.0);  // set background color
 
     glEnable(GL_LIGHTING);
