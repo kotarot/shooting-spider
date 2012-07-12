@@ -1,12 +1,13 @@
 // color.c
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "color.h"
 
 void init_color(void)
 {
     int i, j;
-    double p_color[NUM_OF_COLORS][3] = {
+    //double p_color[NUM_OF_COLORS][3] = {
+    GLfloat p_color[NUM_OF_COLORS][3] = {
         {0.3, 0.3, 0.3}, // gray
         {0.6, 0.6, 0.6}, // blue
         {1.0, 0.0, 1.0}, // purple

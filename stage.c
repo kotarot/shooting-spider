@@ -1,6 +1,6 @@
 ﻿// stage.c
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "stage.h"
 #include "util.h"
 
@@ -22,8 +22,8 @@ void init_stage(void)
 void disp_stage(void)
 {
     int i;
-    GLfloat color_stage[4] = {0.6, 0.6, 0.0, 1.0};
-    GLfloat color_wall[4] = {0.0, 0.6, 0.6, 1.0};
+    GLfloat color_stage[4] = {0.1, 0.1, 0.0, 1.0};
+    GLfloat color_wall[4] = {0.2, 0.2, 0.2, 1.0};
 
 	//stage
     glPushMatrix();
@@ -73,8 +73,8 @@ void disp_stage(void)
 
 	//floor
 	draw_rectangle(
-		WIDTH_STAGE,100,10,
-		0,DISTANCE_STAGE / 2,-10
+		WIDTH_STAGE,100,THICK,
+		0,DISTANCE_STAGE / 2,-THICK
 		);
 	/*
 	//roof

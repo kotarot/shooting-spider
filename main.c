@@ -2,7 +2,7 @@
 //メインファイル
 
 #include <stdio.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "character.h"
 #include "color.h"
 #include "global.h"
@@ -91,7 +91,7 @@ void init(void)
     init_stage();
     //visual_mode = FOLLOW;
     //gamestate = PLAY;
-    //init_color();
+    init_color();
     // init_map();
     //set_character(&spider, 5.5, 1.5, GRAY);
     //set_blocks();

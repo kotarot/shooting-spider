@@ -7,7 +7,7 @@
 
 */
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 //#include "global.h"
 #include "character.h"
 #include "stage.h"
@@ -278,7 +278,8 @@ void renew_character(s_character *character){
     character->r     = 1.0;
  //   character->speed = 0.1;
     character->score = 10;
-    character->color = GRAY;
+    //character->color = GRAY;
+    character->color = get_rand(0,NUM_OF_COLORS - 1);
     character->alive = 1;
 }
 
@@ -300,7 +301,8 @@ void draw_one_character(s_character *character)
     color = character->color;
 
     // set color
-    color_body[0] = color_val[color][0];
+
+	color_body[0] = color_val[color][0];
     color_body[1] = color_val[color][1];
     color_body[2] = color_val[color][2];
     color_body[3] = 1.0;

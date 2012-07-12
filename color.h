@@ -20,6 +20,7 @@ typedef enum T_COLOR {
 
 extern GLfloat color_val[NUM_OF_COLORS][3];
 
+
 void init_color(void);
 
 #endif
