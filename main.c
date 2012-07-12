@@ -11,7 +11,7 @@
 #include "stage.h"
 #include "util.h"
 
-#define FPS 10
+#define FPS 15
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
