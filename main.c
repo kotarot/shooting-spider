@@ -84,7 +84,7 @@ void init(void)
     game_time = 0;
     init_rand();
     init_character();
-	for (i=0;i<5;i++) {
+	for (i=0;i<8;i++) {
     	new_character();
 	}
     init_shot();

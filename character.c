@@ -96,96 +96,6 @@ void change_color(s_character *character)
     //glutPostRedisplay();
 }*/
 
-/*void move_forward(s_character *character)
-{
-    int left_x, center_x, right_x, y;
-
-    if (character->alive == 0) {
-        return;
-    }
-    left_x = (character->x - 5) / 10;
-    center_x = character->x / 10;
-    right_x = (character->x + 4) / 10;
-    y = (character->y + 5) / 10;
-    if (map[y][left_x] == VACANT && map[y][center_x] == VACANT && map[y][right_x] == VACANT) {
-        character->y++;
-    } else if (map[y][left_x] == BLOCK || map[y][center_x] == BLOCK || map[y][right_x] == BLOCK) {
-        //printf("Collide with block! character=0x%08x\n", character);
-        character->alive = 0;
-        character->color = RED;
-        glutTimerFunc(3000, timer_callback_func, (int)character);
-    } else {
-        //printf("GOAL!!\n");
-        //gamestate = GOAL;
-        character->alive = 0;
-        goal_anime((int)&spider);
-        init_shower();
-    }
-}*/
-
-/*void move_backward(s_character *character)
-{
-    int left_x, center_x, right_x, y;
-
-    if (character->alive == 0) {
-        return;
-    }
-    left_x = (character->x - 5) / 10;
-    center_x = character->x / 10;
-    right_x = (character->x + 4) / 10;
-    y = (character->y - 6) / 10;
-    if (map[y][left_x] == VACANT && map[y][center_x] == VACANT && map[y][right_x] == VACANT) {
-        character->y--;
-    } else if (map[y][left_x] == BLOCK || map[y][center_x] == BLOCK || map[y][right_x] == BLOCK) {
-        //printf("Collide with block! character=0x%08x\n", character);
-        character->alive = 0;
-        character->color = RED;
-        glutTimerFunc(3000, timer_callback_func, (int)character);
-    }
-}*/
-
-/*void move_right(s_character *character)
-{
-    int x, up_y, center_y, down_y;
-
-    if (character->alive == 0) {
-        return;
-    }
-    x = (character->x + 5) / 10;
-    up_y = (character->y + 4) / 10;
-    center_y = character->y / 10;
-    down_y = (character->y - 5) / 10;
-    if (map[up_y][x] == VACANT && map[center_y][x] == VACANT && map[down_y][x] == VACANT) {
-        character->x++;
-    } else if (map[up_y][x] == BLOCK || map[center_y][x] == BLOCK || map[down_y][x] == BLOCK) {
-        //printf("Collide with block! character=0x%08x\n", character);
-        character->alive = 0;
-        character->color = RED;
-        glutTimerFunc(3000, timer_callback_func, (int)character);
-    }
-}*/
-
-/*void move_left(s_character *character)
-{
-    int x, up_y, center_y, down_y;
-
-    if (character->alive == 0) {
-        return;
-    }
-    x = (character->x - 6) / 10;
-    up_y = (character->y + 4) / 10;
-    center_y = character->y / 10;
-    down_y = (character->y - 5) / 10;
-    if (map[up_y][x] == VACANT && map[center_y][x] == VACANT && map[down_y][x] == VACANT) {
-        character->x--;
-    } else if (map[up_y][x] == BLOCK || map[center_y][x] == BLOCK || map[down_y][x] == BLOCK) {
-        //printf("Collide with block! character=0x%08x\n", character);
-        character->alive = 0;
-        character->color = RED;
-        glutTimerFunc(3000, timer_callback_func, (int)character);
-    }
-}*/
-
 /*void goal_anime(int value)
 {
     //goaltimer++;
@@ -221,14 +131,19 @@ void init_character(void)
 // キャラクター生成、（とりあえず）呼ぶと適当な位置に半径１で設定、生きてる
 void new_character(void)
 {
-    int p = p_character++ % NUM_OF_CHARS;  // キャラクターリストの添字
-
-    character[p].x     = get_rand(-10, 10) + 0.0;
-//    character[p].y     = get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
+	int p = p_character++ % NUM_OF_CHARS;  // キャラクターリストの添字
+	character[p].x = get_rand(-WIDTH_STAGE / 2, WIDTH_STAGE / 2) ;
+	/*
+	if (get_rand(0,1)) {
+		character[p].x = -WIDTH_STAGE / 2 ;
+	} else {
+		character[p].x = WIDTH_STAGE / 2;
+	}
+	*/
     character[p].y     =  DISTANCE_STAGE + DEPTH_STAGE / 2.0;
     character[p].z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
     character[p].r     = 1.0;
-	if (p_character % 2 == 0) {
+	if (character->x < 0) {
     	character[p].speed = 0.1;
 	} else {
     	character[p].speed = -0.1;
@@ -263,6 +178,7 @@ void update_character(void)
         if (character[i].alive) {
             character[i].x += character[i].speed;
         }
+		//場外にいった場合
 		if (character[i].x > WIDTH_STAGE / 2 || character[i].x < -WIDTH_STAGE / 2) {
 			renew_character(&character[i]);
 		}
@@ -271,12 +187,21 @@ void update_character(void)
     // 衝突判定によってaliveを0か1に変えるのをここにかかなきゃならんがまだ書いてない
 }
 void renew_character(s_character *character){
-    character->x     =get_rand(-10, 10) + 0.0;
+	if (get_rand(0,1)) {
+		character->x = -WIDTH_STAGE / 2 ;
+	} else {
+		character->x = WIDTH_STAGE / 2 ;
+	}
     //character->y     =get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
     character->y     = DISTANCE_STAGE + DEPTH_STAGE / 2.0;
     character->z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
     character->r     = 1.0;
  //   character->speed = 0.1;
+	if (character->x < 0) {
+    	character->speed = 0.1;
+	} else {
+    	character->speed = -0.1;
+	}
     character->score = 10;
     //character->color = GRAY;
     character->color = get_rand(0,NUM_OF_COLORS - 1);
