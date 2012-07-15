@@ -11,7 +11,7 @@
 #include "stage.h"
 #include "util.h"
 
-#define FPS 10
+#define FPS 5
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
@@ -83,12 +83,14 @@ void init(void)
     // いろいろ初期化の関数はここで呼ぶ 
     game_time = 0;
     init_rand();
-    init_character();
-	for (i=0;i<5;i++) {
-    	new_character();
-	}
+
+	//for (i=0;i<5;i++) {
+    //	new_character();
+	//}
+    //init_stage();  // <- これ呼んでもやる処理ないんだよねｗ
     init_shot();
-    init_stage();
+    init_character();
+
     //visual_mode = FOLLOW;
     //gamestate = PLAY;
     //init_color();
@@ -115,10 +117,20 @@ void resize(int w, int h)
 /* (1/FPS)秒ごとに呼ばれる */
 void timer(int value)
 {
-    printf("game_time = %d\n", game_time);
-    //disp_character();
-    //disp_Shot();
-    //disp_stage();
+    int r;
+
+    //printf("game_time = %d\n", game_time);
+
+    // 一定の確率で新しい敵キャラ生成
+    // とりあえず5% 多いかなｗ <- 多かったわ 2%にした
+    r = get_rand(0, 100);
+    if (r < 2) {
+        printf("generated!\n");
+        new_character();
+        //new_shot(1.0, 45.0, 45.0);
+    }
+
+    update_shot();
     update_character();
     display();
     game_time++;

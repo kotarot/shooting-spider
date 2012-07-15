@@ -4,7 +4,7 @@
 #include <math.h>
 #include "shot.h"
 
-#define g 9.8	// 重力加速度は適当な値に
+#define G 0.01	// 重力加速度は適当な値に
 #define shot_r 0.2	//弾の半径(これも適当な値に)
 
 // *** これはglobal.hに入れた方が良い？ <- いやここでいいよ
@@ -30,15 +30,17 @@ void init_shot(void)
 // 弾生成関数
 void new_shot(double v0, double angle0, double angle1)
 {
+	// 弾リストのポインタ
+	int p = p_shot++ % NUM_OF_SHOTS;
+
+//printf("new_shot\n");
+
 	// 与えられた引数や現在時間から、新たに打ち出された弾の値をセット
-	shot[p_shot].t= game_time;
-	shot[p_shot].v0= v0;
-	shot[p_shot].angle0= angle0;
-	shot[p_shot].angle1= angle1;
-	shot[p_shot].alive= 1;
-	
-	// 弾リストのポインタを増やす
-	p_shot++;
+	shot[p].t= game_time;
+	shot[p].v0= v0;
+	shot[p].angle0= angle0;
+	shot[p].angle1= angle1;
+	shot[p].alive= 1;
 }
 
 // 弾情報更新
@@ -51,7 +53,7 @@ void update_shot(void)
 	// *** 弾が当たっている場合は、何かフラグでも立てた方がいいかな？(得点計算的に)
 	// *** 描画関数は呼び出さなくていいんだよね？ <- いいよ
 	calcShotPosAll();
-	for(i=0; i<p_shot; i++){
+	/*for(i=0; i<p_shot; i++){
 		// 衝突判定は、生きている弾についてのみ行う
 		if(shot[i].alive != 0){
 			for(j=0; j<p_character; j++){
@@ -60,7 +62,7 @@ void update_shot(void)
 				}
 			}
 		}
-	}
+	}*/
 
 }
 
@@ -81,16 +83,17 @@ void disp_one_shot(s_shot *s)
 	// 弾の描画にはglutSolidSphere関数を使用
 	glPushMatrix();
 	glTranslated(s->x, s->y, s->z);
-	glScalef(shot_r, shot_r, shot_r);
-	
+	//glScalef(shot_r, shot_r, shot_r);
+
 	// 照光処理
 	glMaterialfv(GL_FRONT, GL_AMBIENT, shot_color);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, shot_color);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, shot_color);
-	glMaterialf( GL_FRONT, GL_SHININESS, 60.0);
-	
+	glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
+
 	// Scalefを使わずに、SolidSphereの1つ目の引数にshot_rを指定しても良い。
-	glutSolidSphere(1.0, 40, 40);
+	//glutSolidSphere(1.0, 40, 40);
+	glutSolidSphere(shot_r, 10, 10);
 	glPopMatrix();
 }
 
@@ -120,14 +123,20 @@ void calcShotPos(s_shot *s)
 	unsigned int live_t= game_time - s->t;
 
 	// 各速度の計算
-	s->v_x= (s->v0*cos(s->angle0))*sin(s->angle1);
-	s->v_y= (s->v0*cos(s->angle0))*cos(s->angle1);
-	s->v_z= s->v0*sin(s->angle0) - g*live_t;
+	s->v_x= s->v0 * cos(s->angle0) * sin(s->angle1); // これは弾固定値だから毎回計算しない方がいいな
+	s->v_y= s->v0 * cos(s->angle0) * cos(s->angle1); // これも
+	s->v_z= s->v0 * sin(s->angle0) - G * live_t;
+
+    printf("vx=%lf vy=%lf vz=%lf\n", s->v_x, s->v_y, s->v_z);
 
 	// 各座標の計算
-	s->x= s->x + s->v_x*live_t;
-	s->y= s->y + s->v_y*live_t;
-	s->z= s->z + s->v_z*live_t - g*live_t*live_t/2;
+	s->x= s->x + s->v_x * live_t;
+	s->y= s->y + s->v_y * live_t;
+	s->z= s->z + s->v_z * live_t - G * live_t * live_t * 0.5;
+
+    //s->z = 0;
+
+    printf("x=%lf y=%lf z=%lf\n", s->x, s->y, s->z);
 }
 
 // 全ての生きている弾の座標を計算する関数
@@ -135,9 +144,9 @@ void calcShotPosAll(void)
 {
 	int i;
 
-	for(i=0; i<NUM_OF_SHOTS; i++) {
+	for (i = 0; i < NUM_OF_SHOTS; i++) {
 		//生きている弾について、座標を計算する。
-		if(shot[i].alive == 1) {
+		if (shot[i].alive == 1) {
 			calcShotPos(&shot[i]);
 		}
 	}

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include "input.h"
+#include "shot.h"
 
 // キーボード（文字キー）
 void keyboard(unsigned char key, int x, int y)
@@ -18,6 +19,9 @@ void keyboard(unsigned char key, int x, int y)
         //    init();
         //    break;
         // quit
+		case 's':
+		    new_shot(0.1, 90.0, 45.0);
+            break;
 		case 'l':
 		//15がよかった
 			eye_y += 0.5;

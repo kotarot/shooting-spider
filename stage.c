@@ -4,6 +4,7 @@
 #include "stage.h"
 #include "util.h"
 
+// ここやることないｗ
 void init_stage(void)
 {
     //int i, j;

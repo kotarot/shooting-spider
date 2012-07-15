@@ -221,18 +221,28 @@ void init_character(void)
 // キャラクター生成、（とりあえず）呼ぶと適当な位置に半径１で設定、生きてる
 void new_character(void)
 {
+    int r;
     int p = p_character++ % NUM_OF_CHARS;  // キャラクターリストの添字
 
-    character[p].x     = get_rand(-10, 10) + 0.0;
+    r = get_rand(0, 1);  // 0か1の乱数生成 (右向きか左向きか)
+    if (r == 0) { // 右向き
+        character[p].x = -WIDTH_STAGE * 0.5; // 左端
+        character[p].speed = 0.1;
+    } else { // 左向き
+        character[p].x = WIDTH_STAGE * 0.5; // 右端
+        character[p].speed = -0.1;
+    }
+
+//    character[p].x     = get_rand(-10, 10) + 0.0;
 //    character[p].y     = get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
-    character[p].y     =  DISTANCE_STAGE + DEPTH_STAGE / 2.0;
-    character[p].z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3;
+    character[p].y     =  DISTANCE_STAGE + DEPTH_STAGE * 0.5;
+    character[p].z     = get_rand(0, 2) * HEIGHT_STAGE + 0.3/* この0.3ってキャラクターの高さだっけ？ */;
     character[p].r     = 1.0;
-	if (p_character % 2 == 0) {
-    	character[p].speed = 0.1;
-	} else {
-    	character[p].speed = -0.1;
-	}
+//	if (p_character % 2 == 0) {
+//    	character[p].speed = 0.1;
+//	} else {
+//    	character[p].speed = -0.1;
+//	}
     character[p].score = 10;
     character[p].color = GRAY;
     character[p].alive = 1;
@@ -263,14 +273,15 @@ void update_character(void)
         if (character[i].alive) {
             character[i].x += character[i].speed;
         }
-		if (character[i].x > WIDTH_STAGE / 2 || character[i].x < -WIDTH_STAGE / 2) {
+/*		if (character[i].x > WIDTH_STAGE / 2 || character[i].x < -WIDTH_STAGE / 2) {
 			renew_character(&character[i]);
-		}
+		}*/
     }
 
     // 衝突判定によってaliveを0か1に変えるのをここにかかなきゃならんがまだ書いてない
 }
-void renew_character(s_character *character){
+
+/*void renew_character(s_character *character){
     character->x     =get_rand(-10, 10) + 0.0;
     //character->y     =get_rand(DISTANCE_STAGE, DISTANCE_STAGE + DEPTH_STAGE) + 0.0;
     character->y     = DISTANCE_STAGE + DEPTH_STAGE / 2.0;
@@ -280,7 +291,7 @@ void renew_character(s_character *character){
     character->score = 10;
     character->color = GRAY;
     character->alive = 1;
-}
+}*/
 
 // draw_characterを改変して使ってみる
 void draw_one_character(s_character *character)
@@ -313,13 +324,14 @@ void draw_one_character(s_character *character)
     glMaterialfv(GL_FRONT, GL_SPECULAR, color_body);
     glMaterialf(GL_FRONT, GL_SHININESS, 80.0);
 
-	glTranslatef(pos_x, pos_y, pos_z);
-	if (character->speed < 0) {
-		glRotatef(90.0f, 0.0f, 0.0f, 1.0f); 
-	} else {
-		glRotatef(-90.0f, 0.0f, 0.0f, 1.0f); 
-	}
+    glTranslatef(pos_x, pos_y, pos_z);
 
+    // 動いてる向きに回転させる
+    if (character->speed < 0) {
+        glRotatef(90.0f, 0.0f, 0.0f, 1.0f); 
+    } else {
+        glRotatef(-90.0f, 0.0f, 0.0f, 1.0f); 
+    }
 
     // body
     draw_rectangle(0.5, 0.8, 0.3, 0.0, - 0.1, 0.0 );
