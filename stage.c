@@ -22,7 +22,7 @@ void init_stage(void)
 void disp_stage(void)
 {
     int i;
-    GLfloat color_stage[4] = {0.1, 0.1, 0.0, 1.0};
+    GLfloat color_stage[4] = {0.4, 0.4, 0.4, 1.0};
     GLfloat color_wall[4] = {0.2, 0.2, 0.2, 1.0};
 
 	//stage
