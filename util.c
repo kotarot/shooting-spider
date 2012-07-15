@@ -12,7 +12,7 @@ void init_rand(void)
     //srand(0x12345678);
 }
 
-// get random number form ... to ...
+// get random number form ... to ... (from以上to以下の乱数)
 int get_rand(int from, int to)
 {
     return from + (int)(rand() * (to - from + 1.0) / (1.0 + RAND_MAX));

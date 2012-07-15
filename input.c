@@ -20,7 +20,7 @@ void keyboard(unsigned char key, int x, int y)
         //    break;
         // quit
 		case 's':
-		    new_shot(0.1, 90.0, 45.0);
+		    new_shot(0.3, 45.0, 0.0);
             break;
 		case 'l':
 		//15がよかった

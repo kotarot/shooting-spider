@@ -3,12 +3,7 @@
 #ifndef __MY_SHOT__
 #define __MY_SHOT__
 
-//#include <GL/glut.h>
-
-#include "character.h"
-#include "global.h"
-
-#define NUM_OF_SHOTS 256 // 弾の数
+#define NUM_OF_SHOTS 16 // 弾の数
 
 unsigned int game_time;
 
@@ -26,21 +21,6 @@ typedef struct T_SHOT {
     unsigned int t; // 発射された時間
     int alive; // 弾の生死(0:死 1(0以外):生)
 } s_shot;
-/*
-typedef struct T_SHOT {
-    double x;
-    double y;
-    double z;
-    double v_x;
-    double v_y;
-    double v_z;
-    unsigned int t;
-    double v0;
-    double angle0;
-    double angle1;
-    int live;
-} s_shot;
-//*/
 
 // list(array) of shot
 s_shot shot[NUM_OF_SHOTS];
@@ -50,7 +30,6 @@ int p_shot;
 void init_shot(void);
 
 // 弾生成
-//void new_shot(unsigned int t, double v0, double angle0, double angle1);
 void new_shot(double v0, double angle0, double angle1);
 
 // 弾更新

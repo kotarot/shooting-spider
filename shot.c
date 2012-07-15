@@ -3,9 +3,12 @@
 #include <GL/glut.h>
 #include <math.h>
 #include "shot.h"
+#include "color.h"
 
 #define G 0.01	// 重力加速度は適当な値に
 #define shot_r 0.2	//弾の半径(これも適当な値に)
+
+#define PI 3.14159265
 
 // *** これはglobal.hに入れた方が良い？ <- いやここでいいよ
 GLfloat shot_color[4]= {0.0, 0.0, 0.0, 1.0};  // 弾の色(黒色)
@@ -18,9 +21,9 @@ void init_shot(void)
 	// 全ての弾を初期化する
 	// 弾を生成するときに座標とかその他もろもろの情報を決めるだろうから
 	// ここでは弾の生死のみを全て「死」状態にしておけばいいかな、程度に
-	for(i=0; i<NUM_OF_SHOTS; i++){
+	for (i = 0; i < NUM_OF_SHOTS; i++){
 		// 弾をすべて殺す
-		shot[i].alive= 0;
+		shot[i].alive = 0;
 	}
 
 	// 弾リストのポインタを最初に戻す。
@@ -33,14 +36,12 @@ void new_shot(double v0, double angle0, double angle1)
 	// 弾リストのポインタ
 	int p = p_shot++ % NUM_OF_SHOTS;
 
-//printf("new_shot\n");
-
 	// 与えられた引数や現在時間から、新たに打ち出された弾の値をセット
-	shot[p].t= game_time;
-	shot[p].v0= v0;
-	shot[p].angle0= angle0;
-	shot[p].angle1= angle1;
-	shot[p].alive= 1;
+	shot[p].t = game_time;
+	shot[p].v0 = v0;
+	shot[p].angle0 = angle0;
+	shot[p].angle1 = angle1;
+	shot[p].alive = 1;
 }
 
 // 弾情報更新
@@ -103,9 +104,9 @@ int isHit(s_shot *s, s_character *c)
 	double x_dis, y_dis, z_dis;//, dis;
 
 	// 距離の計算
-	x_dis= (s->x - c->x)*(s->x - c->x);
-	y_dis= (s->y - c->y)*(s->y - c->y);
-	z_dis= (s->z - c->z)*(s->z - c->z);
+	x_dis= (s->x - c->x) * (s->x - c->x);
+	y_dis= (s->y - c->y) * (s->y - c->y);
+	z_dis= (s->z - c->z) * (s->z - c->z);
 	//dis= sqrt(x_dis + y_dis + z_dis);  // <- ルートの計算重いから
 
 	// 衝突判定
@@ -123,20 +124,25 @@ void calcShotPos(s_shot *s)
 	unsigned int live_t= game_time - s->t;
 
 	// 各速度の計算
-	s->v_x= s->v0 * cos(s->angle0) * sin(s->angle1); // これは弾固定値だから毎回計算しない方がいいな
-	s->v_y= s->v0 * cos(s->angle0) * cos(s->angle1); // これも
-	s->v_z= s->v0 * sin(s->angle0) - G * live_t;
+	s->v_x= s->v0 * cos(s->angle0 * PI / 180) * sin(s->angle1 * PI / 180); // これは弾固定値だから毎回計算しない方がいいな
+	s->v_y= s->v0 * cos(s->angle0 * PI / 180) * cos(s->angle1 * PI / 180); // これも
+	s->v_z= s->v0 * sin(s->angle0 * PI / 180) - G * live_t;
 
-    printf("vx=%lf vy=%lf vz=%lf\n", s->v_x, s->v_y, s->v_z);
+    //printf("vx=%lf vy=%lf vz=%lf\n", s->v_x, s->v_y, s->v_z);
 
 	// 各座標の計算
 	s->x= s->x + s->v_x * live_t;
 	s->y= s->y + s->v_y * live_t;
 	s->z= s->z + s->v_z * live_t - G * live_t * live_t * 0.5;
 
+    // z座標が負になってたら殺す
+    if (s->z < 0) {
+        s->alive = 0;
+    }
+
     //s->z = 0;
 
-    printf("x=%lf y=%lf z=%lf\n", s->x, s->y, s->z);
+    //printf("x=%lf y=%lf z=%lf\n", s->x, s->y, s->z);
 }
 
 // 全ての生きている弾の座標を計算する関数
