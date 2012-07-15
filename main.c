@@ -10,6 +10,7 @@
 #include "shot.h"
 #include "stage.h"
 #include "util.h"
+#include "letter.h"
 
 #define FPS 15
 #define WINDOW_WIDTH  800
@@ -17,9 +18,11 @@
 
 
 double aspect;
-//e_vmode visual_mode;
-//e_gamestate gamestate;
-//e_mapfield map[ROW + 2][COLUMN + 2];
+int width;
+int height;
+
+unsigned int game_time;
+int score;
 
 // この関数が呼ばれたら描画
 void display(void)
@@ -33,37 +36,13 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    gluLookAt(0.0 + eye_x, 7.5 + eye_y, 6.0 + eye_z , 0.0, 40.0, 2.5, 0.0, 0.0, 1.0);
+    gluLookAt(eye_x, eye_y, 6.0 + eye_z , 0.0, 40.0, 2.5, 0.0, 0.0, 1.0);
 
-    /*
-    switch (visual_mode) {
-        case FOLLOW:
-            gluLookAt(
-                      spider.pos_x10 / 10.0,
-                      spider.pos_y10 / 10.0 - 6.0,
-                      spider.height + 3.0,
-                      spider.pos_x10 / 10.0,
-                      spider.pos_y10 / 10.0 + 4.0,
-                      spider.height,
-                      0.0,
-                      0.0,
-                      1.0
-                      );
-            break;
-        case FIXED:
-            gluLookAt(5.5, -10.0, 5.0, 5.5, 20.0, 0.0, 0.0, 0.0, 1.0);
-            break;
-    }
-    */
-    //draw_path(); // draw the path
+    disp_cursor();
     disp_character();
     disp_shot();
-    disp_stage(); // display the stage
-    //draw_character(&spider); // draw the main character
-    //draw_allblocks(); // draw blocks
-    //if (gamestate == GOAL) {
-    //    draw_shower();
-    //}
+    disp_stage();
+    disp_score();
 
     glutSwapBuffers();
 }
@@ -71,9 +50,9 @@ void display(void)
 void init(void)
 {
 	int i;
-	eye_x=0.0;//作業用に視点を動かせるように
-	eye_y=0.0;//作業用に視点を動かせるように
-	eye_z=0.0;//作業用に視点を動かせるように
+	//eye_x=0.0;//作業用に視点を動かせるように
+	//eye_y=0.0;//作業用に視点を動かせるように
+	//eye_z=0.0;//作業用に視点を動かせるように
     glClearColor(1.0, 1.0, 1.0, 1.0);  // set background color
 
     glEnable(GL_LIGHTING);
@@ -82,21 +61,13 @@ void init(void)
 
     // いろいろ初期化の関数はここで呼ぶ 
     game_time = 0;
+    score = 0;
     init_rand();
 
-	//for (i=0;i<5;i++) {
-    //	new_character();
-	//}
     //init_stage();  // <- これ呼んでもやる処理ないんだよねｗ
     init_shot();
+    init_cursor();
     init_character();
-
-    //visual_mode = FOLLOW;
-    //gamestate = PLAY;
-    //init_color();
-    // init_map();
-    //set_character(&spider, 5.5, 1.5, GRAY);
-    //set_blocks();
 }
 
 void resize(int w, int h)
@@ -125,9 +96,8 @@ void timer(int value)
     // とりあえず5% 多いかなｗ <- 多かったわ 2%にした
     r = get_rand(0, 100);
     if (r < 2) {
-        printf("generated!\n");
+        //printf("generated!\n");
         new_character();
-        //new_shot(1.0, 45.0, 45.0);
     }
 
     update_shot();
@@ -139,7 +109,8 @@ void timer(int value)
 
 int main(int argc, char *argv[])
 {
-    int width = WINDOW_WIDTH, height = WINDOW_HEIGHT;
+    width = WINDOW_WIDTH;
+    height = WINDOW_HEIGHT;
     aspect = (double)width / height;
 
     glutInit(&argc, argv);

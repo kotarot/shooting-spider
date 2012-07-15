@@ -9,7 +9,6 @@
 void init_rand(void)
 {
     srand((unsigned)time(NULL));
-    //srand(0x12345678);
 }
 
 // get random number form ... to ... (from以上to以下の乱数)

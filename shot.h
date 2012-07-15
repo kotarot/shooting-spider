@@ -3,7 +3,11 @@
 #ifndef __MY_SHOT__
 #define __MY_SHOT__
 
-#define NUM_OF_SHOTS 16 // 弾の数
+#include "character.h"
+
+#define NUM_OF_SHOTS 32 // 弾の数
+
+#define PI 3.14159265
 
 unsigned int game_time;
 
@@ -16,8 +20,8 @@ typedef struct T_SHOT {
     double v_y; // 現在の速度 y成分
     double v_z; // 現在の速度 z成分
     double v0; // 初速の大きさ
-    double angle0; // 上方向の角度（1周360度法） -90~+90 xy平面と水平になる角度が0
-    double angle1; // 横方向の角度 0~180 x軸方向が0
+    double angle0; // 上方向の角度（1周360度法） -90~+90 xy平面と水平になる角度が0 <- 弧度法にしたよ
+    double angle1; // 横方向の角度 0~180 x軸方向が0 <- 弧度法にしたよ
     unsigned int t; // 発射された時間
     int alive; // 弾の生死(0:死 1(0以外):生)
 } s_shot;
@@ -47,5 +51,15 @@ void calcShotPos(s_shot *s);
 
 // 全ての弾の位置計算
 void calcShotPosAll(void);
+
+// カーソル関連
+double cursor_x;
+double cursor_z;
+void init_cursor(void);
+void cursor_up(void);
+void cursor_down(void);
+void cursor_left(void);
+void cursor_right(void);
+void disp_cursor(void);
 
 #endif

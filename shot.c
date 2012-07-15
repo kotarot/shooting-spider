@@ -4,14 +4,17 @@
 #include <math.h>
 #include "shot.h"
 #include "color.h"
+#include "stage.h"
+#include "global.h"
+#include "letter.h"
 
-#define G 0.01	// 重力加速度は適当な値に
-#define shot_r 0.2	//弾の半径(これも適当な値に)
-
-#define PI 3.14159265
+#define G 0.0007	// 重力加速度は適当な値に
+#define shot_r 0.5	//弾の半径(これも適当な値に)
 
 // *** これはglobal.hに入れた方が良い？ <- いやここでいいよ
 GLfloat shot_color[4]= {0.0, 0.0, 0.0, 1.0};  // 弾の色(黒色)
+
+int score;
 
 // 弾の初期化関数
 void init_shot(void)
@@ -37,10 +40,16 @@ void new_shot(double v0, double angle0, double angle1)
 	int p = p_shot++ % NUM_OF_SHOTS;
 
 	// 与えられた引数や現在時間から、新たに打ち出された弾の値をセット
+	shot[p].x = 0.0;
+    shot[p].y = 0.0;
+    shot[p].z = 0.0;
 	shot[p].t = game_time;
 	shot[p].v0 = v0;
 	shot[p].angle0 = angle0;
 	shot[p].angle1 = angle1;
+    shot[p].v_x= v0 * cos(angle0/* * PI / 180*/) * sin(angle1/* * PI / 180*/);
+	shot[p].v_y= v0 * cos(angle0/* * PI / 180*/) * cos(angle1/* * PI / 180*/);
+    shot[p].v_z = 0.0;
 	shot[p].alive = 1;
 }
 
@@ -48,22 +57,27 @@ void new_shot(double v0, double angle0, double angle1)
 void update_shot(void)
 {
 	int i, j;
+    
+    
 
 	// 全ての弾について、現在位置を更新した後
 	// 衝突判定を行い、衝突している弾を殺す。
 	// *** 弾が当たっている場合は、何かフラグでも立てた方がいいかな？(得点計算的に)
 	// *** 描画関数は呼び出さなくていいんだよね？ <- いいよ
 	calcShotPosAll();
-	/*for(i=0; i<p_shot; i++){
+	for(i=0; i<NUM_OF_SHOTS; i++){
 		// 衝突判定は、生きている弾についてのみ行う
 		if(shot[i].alive != 0){
 			for(j=0; j<p_character; j++){
-				if(isHit(&shot[i], &character[j]) == 1){
+				if(isHit(&shot[i], &character[j]) == 1 && character[j].alive){
+                    score += character[j].score;
+                    //printf("HIT!!!  score = %d\n", score);
+                    character[j].alive = 0;
 					shot[i].alive= 0;
 				}
 			}
 		}
-	}*/
+	}
 
 }
 
@@ -124,9 +138,7 @@ void calcShotPos(s_shot *s)
 	unsigned int live_t= game_time - s->t;
 
 	// 各速度の計算
-	s->v_x= s->v0 * cos(s->angle0 * PI / 180) * sin(s->angle1 * PI / 180); // これは弾固定値だから毎回計算しない方がいいな
-	s->v_y= s->v0 * cos(s->angle0 * PI / 180) * cos(s->angle1 * PI / 180); // これも
-	s->v_z= s->v0 * sin(s->angle0 * PI / 180) - G * live_t;
+	s->v_z= s->v0 * sin(s->angle0/* * PI / 180*/) - G * live_t;
 
     //printf("vx=%lf vy=%lf vz=%lf\n", s->v_x, s->v_y, s->v_z);
 
@@ -156,4 +168,63 @@ void calcShotPosAll(void)
 			calcShotPos(&shot[i]);
 		}
 	}
+}
+
+
+// 以下カーソル関連
+void init_cursor()
+{
+    cursor_x = 0.0;
+    cursor_z = HEIGHT_STAGE;
+}
+
+void cursor_up()
+{
+    if (cursor_z < HEIGHT_STAGE * 3.0) {
+        cursor_z += 0.1;
+    }
+}
+
+void cursor_down()
+{
+    if (0 < cursor_z) {
+        cursor_z -= 0.1;
+    }
+}
+
+void cursor_right()
+{
+    if (cursor_x < WIDTH_STAGE * 0.5) {
+        cursor_x += 0.1;
+    }
+}
+
+void cursor_left()
+{
+    if (-WIDTH_STAGE * 0.5 < cursor_x) {
+        cursor_x -= 0.1;
+    }
+}
+
+void disp_cursor()
+{
+    glDisable(GL_LIGHTING);
+    glPushMatrix();
+
+    glColor3d(0.9, 0.0, 0.0); // red
+    glBegin(GL_POLYGON);
+        glVertex3d(cursor_x + 0.5, DISTANCE_STAGE - 1.0, cursor_z + 0.05);
+        glVertex3d(cursor_x + 0.5, DISTANCE_STAGE - 1.0, cursor_z - 0.05);
+        glVertex3d(cursor_x - 0.5, DISTANCE_STAGE - 1.0, cursor_z - 0.05);
+        glVertex3d(cursor_x - 0.5, DISTANCE_STAGE - 1.0, cursor_z + 0.05);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glVertex3d(cursor_x + 0.05, DISTANCE_STAGE - 1.0, cursor_z + 0.5);
+        glVertex3d(cursor_x + 0.05, DISTANCE_STAGE - 1.0, cursor_z - 0.5);
+        glVertex3d(cursor_x - 0.05, DISTANCE_STAGE - 1.0, cursor_z - 0.5);
+        glVertex3d(cursor_x - 0.05, DISTANCE_STAGE - 1.0, cursor_z + 0.5);
+    glEnd();
+
+    glPopMatrix();
+    glEnable(GL_LIGHTING);
 }

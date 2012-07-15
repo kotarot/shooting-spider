@@ -3,8 +3,6 @@
 #ifndef __MY_COLOR__
 #define __MY_COLOR__
 
-//#include <GL/glut.h>
-
 typedef enum T_COLOR {
     GRAY,
     LIGHTGRAY,
