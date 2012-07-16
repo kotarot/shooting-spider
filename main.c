@@ -57,7 +57,7 @@ void display(void)
     glutSwapBuffers();
 }
 
-void timer(void);
+void timer(int);
 
 void init(void)
 {

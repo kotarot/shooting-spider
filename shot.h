@@ -8,7 +8,8 @@
 #define NUM_OF_SHOTS 50 // 弾の数
 
 #define PI 3.14159265
-
+#define CURSOR_SPEED 0.3
+ 
 unsigned int game_time;
 
 // 弾の構造体

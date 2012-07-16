@@ -63,8 +63,6 @@ void new_shot(double v0, double angle0, double angle1)
 void update_shot(void)
 {
 	int i, j;
-    
-    
 
 	// 全ての弾について、現在位置を更新した後
 	// 衝突判定を行い、衝突している弾を殺す。
@@ -77,7 +75,10 @@ void update_shot(void)
 			for(j=0; j<p_character; j++){
 				if(isHit(&shot[i], &character[j]) == 1 && character[j].alive){
                     // 衝突した！！
-                    score += character[j].score; // スコア加算
+					if (character[j].score == 10 || character[j].score == 50)
+                    	score += character[j].score; // スコア加算
+					else 
+                    	score += 10; // スコア加算
                     //printf("HIT!!!  score = %d\n", score);
                     character[j].alive = 0; // キャラクタ死亡
 					shot[i].alive= 0; // 弾死亡
@@ -190,28 +191,28 @@ void init_cursor(void)
 void cursor_up(void)
 {
     if (cursor_z <= HEIGHT_STAGE * 3.0) {
-        cursor_z += 0.1;
+        cursor_z += 0.3;
     }
 }
 
 void cursor_down(void)
 {
     if (0 <= cursor_z) {
-        cursor_z -= 0.1;
+        cursor_z -= 0.3;
     }
 }
 
 void cursor_right(void)
 {
     if (cursor_x <= WIDTH_STAGE * 0.5) {
-        cursor_x += 0.1;
+        cursor_x += 0.3;
     }
 }
 
 void cursor_left(void)
 {
     if (-WIDTH_STAGE * 0.5 <= cursor_x) {
-        cursor_x -= 0.1;
+        cursor_x -= 0.3;
     }
 }
 
