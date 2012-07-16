@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "input.h"
 #include "shot.h"
 #include "stage.h"

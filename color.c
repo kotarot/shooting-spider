@@ -1,6 +1,6 @@
 // color.c
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "color.h"
 
 void init_color(void)
