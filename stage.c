@@ -1,6 +1,6 @@
 ﻿// stage.c
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "stage.h"
 #include "util.h"
 

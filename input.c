@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "input.h"
 #include "shot.h"
 #include "stage.h"
@@ -21,7 +21,7 @@ void keyboard(unsigned char key, int x, int y)
         //    init();
         //    break;
         // quit
-		case 's': // SHOOT (ロウきゅーぶ！じゃないよ)
+		case 's': // SHOOT (ロウきゅーぶ！じゃないよ)　←　w
             {
                 double a0, a1;
                 a0 = atan(cursor_z / DISTANCE_STAGE);

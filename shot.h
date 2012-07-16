@@ -5,10 +5,11 @@
 
 #include "character.h"
 
-#define NUM_OF_SHOTS 32 // 弾の数
+#define NUM_OF_SHOTS 3200 // 弾の数
 
 #define PI 3.14159265
-
+#define CURSOR_SPEED 0.3
+ 
 unsigned int game_time;
 
 // 弾の構造体

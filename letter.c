@@ -1,7 +1,7 @@
 // letter.c
 
 #include <stdio.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include "letter.h"
 #include "global.h"
 

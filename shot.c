@@ -1,6 +1,6 @@
 ﻿// shot.c
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <math.h>
 #include "shot.h"
 #include "color.h"
@@ -57,8 +57,6 @@ void new_shot(double v0, double angle0, double angle1)
 void update_shot(void)
 {
 	int i, j;
-    
-    
 
 	// 全ての弾について、現在位置を更新した後
 	// 衝突判定を行い、衝突している弾を殺す。
@@ -181,28 +179,31 @@ void init_cursor()
 void cursor_up()
 {
     if (cursor_z < HEIGHT_STAGE * 3.0) {
-        cursor_z += 0.1;
+        cursor_z += CURSOR_SPEED;
     }
 }
 
 void cursor_down()
 {
     if (0 < cursor_z) {
-        cursor_z -= 0.1;
+        //cursor_z -= 0.1;
+        cursor_z -= CURSOR_SPEED;
     }
 }
 
 void cursor_right()
 {
     if (cursor_x < WIDTH_STAGE * 0.5) {
-        cursor_x += 0.1;
+        //cursor_x += 0.1;
+        cursor_x += CURSOR_SPEED;
     }
 }
 
 void cursor_left()
 {
     if (-WIDTH_STAGE * 0.5 < cursor_x) {
-        cursor_x -= 0.1;
+        //cursor_x -= 0.1;
+        cursor_x -= CURSOR_SPEED;
     }
 }
 
