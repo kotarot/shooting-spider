@@ -62,6 +62,7 @@ void init(void)
     game_time = 0;
     score = 0;
     init_rand();
+    init_color();
 
     //init_stage();  // <- これ呼んでもやる処理ないんだよねｗ
     init_shot();
