@@ -1,6 +1,6 @@
 ﻿// shot.c
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include <math.h>
 #include "shot.h"
 #include "color.h"
@@ -31,26 +31,30 @@ void init_shot(void)
 
 	// 弾リストのポインタを最初に戻す。
 	p_shot= 0;
+
+    used_shots = 0;
 }
 
 // 弾生成関数
 void new_shot(double v0, double angle0, double angle1)
 {
 	// 弾リストのポインタ
-	int p = p_shot++ % NUM_OF_SHOTS;
+	//int p = p_shot++ % NUM_OF_SHOTS;
 
 	// 与えられた引数や現在時間から、新たに打ち出された弾の値をセット
-	shot[p].x = 0.0;
-    shot[p].y = 0.0;
-    shot[p].z = 0.0;
-	shot[p].t = game_time;
-	shot[p].v0 = v0;
-	shot[p].angle0 = angle0;
-	shot[p].angle1 = angle1;
-    shot[p].v_x= v0 * cos(angle0/* * PI / 180*/) * sin(angle1/* * PI / 180*/);
-	shot[p].v_y= v0 * cos(angle0/* * PI / 180*/) * cos(angle1/* * PI / 180*/);
-    shot[p].v_z = 0.0;
-	shot[p].alive = 1;
+	shot[p_shot].x = 0.0;
+    shot[p_shot].y = 0.0;
+    shot[p_shot].z = 0.0;
+	shot[p_shot].t = game_time;
+	shot[p_shot].v0 = v0;
+	shot[p_shot].angle0 = angle0;
+	shot[p_shot].angle1 = angle1;
+    shot[p_shot].v_x= v0 * cos(angle0/* * PI / 180*/) * sin(angle1/* * PI / 180*/);
+	shot[p_shot].v_y= v0 * cos(angle0/* * PI / 180*/) * cos(angle1/* * PI / 180*/);
+    shot[p_shot].v_z = 0.0;
+	shot[p_shot].alive = 1;
+
+    p_shot++;
 }
 
 // 弾情報更新
@@ -68,10 +72,12 @@ void update_shot(void)
 		if(shot[i].alive != 0){
 			for(j=0; j<p_character; j++){
 				if(isHit(&shot[i], &character[j]) == 1 && character[j].alive){
-                    score += character[j].score;
+                    // 衝突した！！
+                    score += character[j].score; // スコア加算
                     //printf("HIT!!!  score = %d\n", score);
-                    character[j].alive = 0;
-					shot[i].alive= 0;
+                    character[j].alive = 0; // キャラクタ死亡
+					shot[i].alive= 0; // 弾死亡
+                    used_shots++;
 				}
 			}
 		}
@@ -104,7 +110,7 @@ void disp_one_shot(s_shot *s)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, shot_color);
 	glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
 
-	// Scalefを使わずに、SolidSphereの1つ目の引数にshot_rを指定しても良い。
+	// Scalefを使わずに、SolidSphereの1つ目の引数にshot_rを指定しても良い。 <- じゃあそうする
 	//glutSolidSphere(1.0, 40, 40);
 	glutSolidSphere(shot_r, 10, 10);
 	glPopMatrix();
@@ -148,6 +154,7 @@ void calcShotPos(s_shot *s)
     // z座標が負になってたら殺す
     if (s->z < 0) {
         s->alive = 0;
+        used_shots++;
     }
 
     //s->z = 0;
@@ -170,44 +177,41 @@ void calcShotPosAll(void)
 
 
 // 以下カーソル関連
-void init_cursor()
+void init_cursor(void)
 {
     cursor_x = 0.0;
     cursor_z = HEIGHT_STAGE;
 }
 
-void cursor_up()
+void cursor_up(void)
 {
-    if (cursor_z < HEIGHT_STAGE * 3.0) {
-        cursor_z += CURSOR_SPEED;
+    if (cursor_z <= HEIGHT_STAGE * 3.0) {
+        cursor_z += 0.1;
     }
 }
 
-void cursor_down()
+void cursor_down(void)
 {
-    if (0 < cursor_z) {
-        //cursor_z -= 0.1;
-        cursor_z -= CURSOR_SPEED;
+    if (0 <= cursor_z) {
+        cursor_z -= 0.1;
     }
 }
 
-void cursor_right()
+void cursor_right(void)
 {
-    if (cursor_x < WIDTH_STAGE * 0.5) {
-        //cursor_x += 0.1;
-        cursor_x += CURSOR_SPEED;
+    if (cursor_x <= WIDTH_STAGE * 0.5) {
+        cursor_x += 0.1;
     }
 }
 
-void cursor_left()
+void cursor_left(void)
 {
-    if (-WIDTH_STAGE * 0.5 < cursor_x) {
-        //cursor_x -= 0.1;
-        cursor_x -= CURSOR_SPEED;
+    if (-WIDTH_STAGE * 0.5 <= cursor_x) {
+        cursor_x -= 0.1;
     }
 }
 
-void disp_cursor()
+void disp_cursor(void)
 {
     glDisable(GL_LIGHTING);
     glPushMatrix();

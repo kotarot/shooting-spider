@@ -16,13 +16,15 @@
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
-
 double aspect;
 int width;
 int height;
 
 unsigned int game_time;
 int score;
+int used_shots;
+
+e_mode game_mode;
 
 // この関数が呼ばれたら描画
 void display(void)
@@ -42,14 +44,21 @@ void display(void)
     disp_character();
     disp_shot();
     disp_stage();
-    disp_score();
+    
+    if (game_mode == PLAYING) {
+        disp_info();
+    } else {
+        draw_shower();
+        disp_result();
+    }
 
     glutSwapBuffers();
 }
 
+void timer(void);
+
 void init(void)
 {
-	int i;
 	//eye_x=0.0;//作業用に視点を動かせるように
 	//eye_y=0.0;//作業用に視点を動かせるように
 	//eye_z=0.0;//作業用に視点を動かせるように
@@ -62,12 +71,16 @@ void init(void)
     // いろいろ初期化の関数はここで呼ぶ 
     game_time = 0;
     score = 0;
+    game_mode = PLAYING;
     init_rand();
+    init_color();
 
     //init_stage();  // <- これ呼んでもやる処理ないんだよねｗ
     init_shot();
     init_cursor();
     init_character();
+
+    glutTimerFunc(1000 / FPS, timer, 0);
 }
 
 void resize(int w, int h)
@@ -85,6 +98,14 @@ void resize(int w, int h)
     glLightfv(GL_LIGHT0, GL_POSITION, pos_light);
 }
 
+// ゲーム終了時に呼ばれる
+void finish(void) {
+    //printf("ゲーム終了\n");
+    game_mode = FINISHED;
+    init_shower();
+    draw_shower();
+}
+
 /* (1/FPS)秒ごとに呼ばれる */
 void timer(int value)
 {
@@ -92,10 +113,16 @@ void timer(int value)
 
     //printf("game_time = %d\n", game_time);
 
+    // 弾使い切ってたらゲーム終了
+    if (NUM_OF_SHOTS <= used_shots) {
+        finish();
+        return;
+    }
+
     // 一定の確率で新しい敵キャラ生成
-    // とりあえず5% 多いかなｗ <- 多かったわ 2%にした
+    // とりあえず5% 多いかなｗ <- 多かったわ 3%にした
     r = get_rand(0, 100);
-    if (r < 2) {
+    if (r < 3) {
         //printf("generated!\n");
         new_character();
     }
@@ -122,7 +149,6 @@ int main(int argc, char *argv[])
     init();
     glutReshapeFunc(resize);
     glutDisplayFunc(display);
-    glutTimerFunc(1000 / FPS, timer, 0);
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(s_keyboard);
     glutMainLoop();

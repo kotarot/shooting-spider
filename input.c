@@ -3,10 +3,12 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include "input.h"
 #include "shot.h"
 #include "stage.h"
+
+extern void init(void);
 
 // キーボード（文字キー）
 void keyboard(unsigned char key, int x, int y)
@@ -17,11 +19,10 @@ void keyboard(unsigned char key, int x, int y)
         //    visual_mode = (visual_mode + 1) % NUM_OF_VMODE;
         //    break;
         // new game
-        //case 'n':
-        //    init();
-        //    break;
-        // quit
-		case 's': // SHOOT (ロウきゅーぶ！じゃないよ)　←　w
+        case 'n':
+            init();
+            break;
+		case ' ': // SHOOT (ロウきゅーぶ！じゃないよ)
             {
                 double a0, a1;
                 a0 = atan(cursor_z / DISTANCE_STAGE);
@@ -31,12 +32,13 @@ void keyboard(unsigned char key, int x, int y)
             }
             break;
 		case 'l':
-		//15がよかった
+		//15がよかった <- なにが？
 			eye_y += 0.5;
 			break;
 		case 'L':
 			eye_y -= 0.5;
 			break;
+        // quit
         case 'q':
             exit(0);
     }

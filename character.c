@@ -13,6 +13,7 @@
 #include "stage.h"
 #include "color.h"
 
+GLfloat color_val[NUM_OF_COLORS][3];
 
 // 初期化 全部ポジション０で赤色、死んでる <- 死んでるだけでいいや 死んでたら何もしないし
 void init_character(void)
@@ -32,10 +33,10 @@ void new_character(void)
     int p = p_character++ % NUM_OF_CHARS;  // キャラクターリストの添字
 
     direction = get_rand(0, 1);  // 0か1の乱数生成 (右向きか左向きか)
-    type = get_rand(0, 9); // 0から9の乱数 (普通キャラかスーパーキャラか)
+    type = get_rand(0, 4); // 0から4の乱数 (普通キャラかスーパーキャラか)
 
-    if (type == 0) { // 10分の1の確率でスーパーキャラ
-        character[p].speed = 0.5;
+    if (type == 0) { // 5分の1の確率でスーパーキャラ
+        character[p].speed = 0.4;
         character[p].score = 50;
         character[p].color = YELLOW;
     } else {

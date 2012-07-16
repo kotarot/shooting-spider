@@ -5,7 +5,7 @@
 
 #include "character.h"
 
-#define NUM_OF_SHOTS 3200 // 弾の数
+#define NUM_OF_SHOTS 50 // 弾の数
 
 #define PI 3.14159265
 #define CURSOR_SPEED 0.3
@@ -29,7 +29,8 @@ typedef struct T_SHOT {
 
 // list(array) of shot
 s_shot shot[NUM_OF_SHOTS];
-int p_shot;
+int p_shot; // 添字
+extern int used_shots; // 既につかわれた弾の数
 
 // 初期化
 void init_shot(void);

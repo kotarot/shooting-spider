@@ -76,14 +76,14 @@ void draw_rectangle(double len_x, double len_y, double len_z, double pos_x, doub
 
     glPopMatrix();
 }
-/*
+
 void init_shower()
 {
     int i;
 
     for (i = 0; i < NUM_OF_PARTICLES; i++) {
-        particle[i].pos_x = get_rand(0, COLUMN * 10) * 0.1;
-        particle[i].pos_y = get_rand(ROW * 10 - 30, ROW * 10 + 30) * 0.1;
+        particle[i].pos_x = get_rand(-20, 20) * 0.1;
+        particle[i].pos_y = get_rand(50, 90) * 0.1;
         particle[i].pos_z = get_rand(50, 150) * 0.1;
         particle[i].color = get_rand(0, NUM_OF_COLORS);
     }
@@ -95,7 +95,7 @@ void showertimer_func(int value)
     int i;
 
     for (i = 0; i < NUM_OF_PARTICLES; i++) {
-        particle[i].pos_z -= 0.1;
+        particle[i].pos_z -= 0.08;
         if (particle[i].pos_z < 0) {
             particle[i].pos_z = get_rand(50, 150) * 0.1;
         }
@@ -127,4 +127,4 @@ void draw_shower()
     }
     glutPostRedisplay();
 }
-*/
+
