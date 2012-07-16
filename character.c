@@ -108,8 +108,6 @@ void draw_one_character(s_character *character)
     // start drawing an object
     glPushMatrix();
 
-    printf("%lf %lf %lf %lf\n", color_body[0], color_body[1], color_body[2], color_body[3]);
-
     glMaterialfv(GL_FRONT, GL_AMBIENT, color_body);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, color_body);
     glMaterialfv(GL_FRONT, GL_SPECULAR, color_body);
