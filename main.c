@@ -1,6 +1,8 @@
 ﻿// main.c
 //メインファイル
 
+#include "switch.h"
+
 #include <stdio.h>
 #include <GL/glut.h>
 #include "character.h"

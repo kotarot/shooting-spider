@@ -7,6 +7,8 @@
 
 */
 
+#include "switch.h"
+
 #include <GL/glut.h>
 #include "global.h"
 #include "character.h"

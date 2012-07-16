@@ -1,6 +1,8 @@
 ﻿// input.c
 // キーボード入力
 
+#include "switch.h"
+
 #include <stdlib.h>
 #include <math.h>
 #include <GL/glut.h>

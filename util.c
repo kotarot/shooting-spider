@@ -1,6 +1,8 @@
 ﻿// util.c
 // いろいろ関数
 
+#include "switch.h"
+
 #include <stdlib.h>
 #include <time.h>
 #include <GL/glut.h>

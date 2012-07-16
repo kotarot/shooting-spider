@@ -1,5 +1,7 @@
 // letter.c
 
+#include "switch.h"
+
 #include <stdio.h>
 #include <GL/glut.h>
 #include "letter.h"

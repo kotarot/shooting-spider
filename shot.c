@@ -1,5 +1,7 @@
 ﻿// shot.c
 
+#include "switch.h"
+
 #include <GL/glut.h>
 #include <math.h>
 #include "shot.h"

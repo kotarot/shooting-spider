@@ -1,5 +1,7 @@
 // color.c
 
+#include "switch.h"
+
 #include <GL/glut.h>
 #include "color.h"
 
