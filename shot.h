@@ -5,7 +5,7 @@
 
 #include "character.h"
 
-#define NUM_OF_SHOTS 10 // 弾の数
+#define NUM_OF_SHOTS 50 // 弾の数
 
 #define PI 3.14159265
 
