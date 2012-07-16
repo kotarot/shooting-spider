@@ -2,7 +2,11 @@
 
 #include "switch.h"
 
-#include <GL/glut.h>
+#ifdef MAC
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
 #include <math.h>
 #include "shot.h"
 #include "color.h"

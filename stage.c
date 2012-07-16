@@ -1,6 +1,12 @@
 ﻿// stage.c
 
-#include <GL/glut.h>
+#include "switch.h"
+
+#ifdef MAC
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
 #include "stage.h"
 #include "util.h"
 

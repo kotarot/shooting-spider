@@ -5,7 +5,11 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include <GL/glut.h>
+#ifdef MAC
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
 #include "util.h"
 
 void init_rand(void)

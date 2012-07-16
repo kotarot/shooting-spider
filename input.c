@@ -5,7 +5,11 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <GL/glut.h>
+#ifdef MAC
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
 #include "input.h"
 #include "shot.h"
 #include "stage.h"

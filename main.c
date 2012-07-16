@@ -4,7 +4,11 @@
 #include "switch.h"
 
 #include <stdio.h>
-#include <GL/glut.h>
+#ifdef MAC
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
 #include "character.h"
 #include "color.h"
 #include "global.h"

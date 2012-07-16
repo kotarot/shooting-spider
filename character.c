@@ -9,7 +9,11 @@
 
 #include "switch.h"
 
-#include <GL/glut.h>
+#ifdef MAC
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
 #include "global.h"
 #include "character.h"
 #include "stage.h"
