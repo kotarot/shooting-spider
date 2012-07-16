@@ -49,7 +49,6 @@ void display(void)
 
 void init(void)
 {
-	int i;
 	//eye_x=0.0;//作業用に視点を動かせるように
 	//eye_y=0.0;//作業用に視点を動かせるように
 	//eye_z=0.0;//作業用に視点を動かせるように

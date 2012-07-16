@@ -10,7 +10,7 @@ int height;
 
 int score;
 
-void disp_score()
+void disp_score(void)
 {
     char str[64];
     void *font = GLUT_BITMAP_HELVETICA_18;

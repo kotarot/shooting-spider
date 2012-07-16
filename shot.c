@@ -172,41 +172,41 @@ void calcShotPosAll(void)
 
 
 // 以下カーソル関連
-void init_cursor()
+void init_cursor(void)
 {
     cursor_x = 0.0;
     cursor_z = HEIGHT_STAGE;
 }
 
-void cursor_up()
+void cursor_up(void)
 {
-    if (cursor_z < HEIGHT_STAGE * 3.0) {
+    if (cursor_z <= HEIGHT_STAGE * 3.0) {
         cursor_z += 0.1;
     }
 }
 
-void cursor_down()
+void cursor_down(void)
 {
-    if (0 < cursor_z) {
+    if (0 <= cursor_z) {
         cursor_z -= 0.1;
     }
 }
 
-void cursor_right()
+void cursor_right(void)
 {
-    if (cursor_x < WIDTH_STAGE * 0.5) {
+    if (cursor_x <= WIDTH_STAGE * 0.5) {
         cursor_x += 0.1;
     }
 }
 
-void cursor_left()
+void cursor_left(void)
 {
-    if (-WIDTH_STAGE * 0.5 < cursor_x) {
+    if (-WIDTH_STAGE * 0.5 <= cursor_x) {
         cursor_x -= 0.1;
     }
 }
 
-void disp_cursor()
+void disp_cursor(void)
 {
     glDisable(GL_LIGHTING);
     glPushMatrix();
